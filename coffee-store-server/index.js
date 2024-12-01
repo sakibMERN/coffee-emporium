@@ -53,14 +53,14 @@ async function run() {
 
     app.post('/coffee', async(req, res)=> {
       const newCoffee = req.body;
-      console.log(newCoffee);
+      // console.log(newCoffee);
       const result = await coffeeCollection.insertOne(newCoffee);
       res.send(result);
     })
 
     app.delete('/coffee/:id', async(req, res) => {
       const id = req.params.id;
-      console.log(id);
+      // console.log(id);
       const query = {_id: new ObjectId(id)};
       const result = await coffeeCollection.deleteOne(query);
       res.send(result);
