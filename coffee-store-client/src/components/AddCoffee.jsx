@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2'
+
 const AddCoffee = () => {
 
   const handleAddCoffee = (e) => {
@@ -21,6 +23,26 @@ const AddCoffee = () => {
       photo
     }
     console.log(allData);
+
+    fetch('http://localhost:5000/coffee', {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(allData)
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      if(data.insertedId){
+        Swal.fire({
+          title: 'Success!',
+          text: 'Coffee added successfully',
+          icon: 'success',
+          confirmButtonText: 'Cool'
+        })
+      }
+    })
   }
   return (
     <div className="space-y-5 bg-[#f4f3f0] p-24">
