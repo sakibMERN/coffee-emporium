@@ -1,4 +1,5 @@
 import { useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const UpdateCoffee = () => {
   const coffee = useLoaderData();
@@ -16,7 +17,7 @@ const UpdateCoffee = () => {
     const details = form.details.value;
     const photo = form.photo.value;
 
-    const updateData = {
+    const updatedCoffee = {
       name,
       quantity,
       supplier,
@@ -25,12 +26,33 @@ const UpdateCoffee = () => {
       details,
       photo,
     };
-    console.log(updateData);
+    console.log(updatedCoffee);
+
+    fetch(`http://localhost:5000/coffee/${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedCoffee),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          Swal.fire({
+            title: "Success!",
+            text: "Coffee Updated successfully",
+            icon: "success",
+            confirmButtonText: "Cool",
+          });
+        }
+      });
   };
+
   return (
     <div className="space-y-5 bg-[#f4f3f0] p-24">
-      <h2 className="text-3xl font-extrabold">Update Coffee</h2>
-      <form onSubmit={() => handleUpdate(_id)} className="space-y-4">
+      <h2 className="text-3xl font-extrabold">Update Coffee: {name}</h2>
+      <form onSubmit={handleUpdate} className="space-y-4">
         {/* row 1 */}
         <div className=" md:flex gap-4">
           {/* form row left */}
@@ -136,7 +158,7 @@ const UpdateCoffee = () => {
         <input
           className="btn btn-block bg-slate-500 text-white"
           type="submit"
-          value={"Submit"}
+          value={"Update Coffee Now!"}
         />
       </form>
     </div>

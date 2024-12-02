@@ -53,7 +53,7 @@ const AddCoffee = () => {
           {/* form row left */}
           <div className="md:w-1/2">
             <label className="input input-bordered flex items-center gap-2">
-              Coffee Name
+              Coffee Name:
               <input
                 type="text"
                 name="name"
@@ -66,7 +66,7 @@ const AddCoffee = () => {
           {/* form row right */}
           <div className="md:w-1/2">
             <label className="input input-bordered flex items-center gap-2">
-              Available Quantity
+              Available Quantity:
               <input
                 type="text"
                 name="quantity"
@@ -82,7 +82,7 @@ const AddCoffee = () => {
           {/* form row left */}
           <div className="md:w-1/2">
             <label className="input input-bordered flex items-center gap-2">
-              Supplier Name
+              Supplier Name:
               <input
                 type="text"
                 name="supplier"
@@ -95,7 +95,7 @@ const AddCoffee = () => {
           {/* form row right */}
           <div className="md:w-1/2">
             <label className="input input-bordered flex items-center gap-2">
-              Test
+              Test:
               <input
                 type="text"
                 name="test"
@@ -111,7 +111,7 @@ const AddCoffee = () => {
           {/* form row left */}
           <div className="md:w-1/2">
             <label className="input input-bordered flex items-center gap-2">
-              Category
+              Category:
               <input
                 type="text"
                 name="category"
@@ -124,7 +124,7 @@ const AddCoffee = () => {
           {/* form row right */}
           <div className="md:w-1/2">
             <label className="input input-bordered flex items-center gap-2">
-              Details
+              Details:
               <input
                 type="text"
                 name="details"
@@ -140,7 +140,7 @@ const AddCoffee = () => {
           {/* form row left */}
           <div className="w-full">
             <label className="input input-bordered flex items-center gap-2">
-              Photo URL
+              Photo URL:
               <input
                 type="text"
                 name="photo"
