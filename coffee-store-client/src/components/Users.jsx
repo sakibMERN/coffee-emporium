@@ -58,6 +58,7 @@ const Users = () => {
               <th>Email</th>
               <th>User Id</th>
               <th>Join Date</th>
+              <th>Last SingIn</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -70,6 +71,7 @@ const Users = () => {
                 <td>{user.email}</td>
                 <td>{user._id}</td>
                 <td>{user.createdAt ? user.createdAt : "N/A"}</td>
+                <td>{user.lastSignInTime ? user.lastSignInTime : "N/A"}</td>
                 <td className="flex gap-2">
                   <button className="text-green-500 text-lg" title="edit">
                     <FaEdit />
