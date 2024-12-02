@@ -26,7 +26,7 @@ const Users = () => {
         //     text: "Your file has been deleted.",
         //     icon: "success"
         //   });
-        fetch(`http://localhost:5000/users/${id}`, {
+        fetch(`https://coffee-store-server-two-tawny.vercel.app/users/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
