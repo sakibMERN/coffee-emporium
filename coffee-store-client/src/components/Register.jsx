@@ -1,51 +1,60 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../Provider/AuthProvider';
+import React, { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
+import axios from "axios";
 
 const Register = () => {
-    const {createUser} = useContext(AuthContext); 
+  const { createUser } = useContext(AuthContext);
 
-    const handleSignUp = e => {
-        e.preventDefault();
+  const handleSignUp = (e) => {
+    e.preventDefault();
 
-        const name = e.target.name.value;
-        const email = e.target.email.value;
-        const password = e.target.password.value;
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-        
-        console.log(email, password);
+    console.log(email, password);
 
-        createUser(email, password)
-        .then(result => {
-            console.log(result.user);
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
 
-            const createdAt = result?.user?.metadata?.
-            creationTime;            
-            const newUser = {
-                name,
-                email,
-                createdAt
-            } 
-            //save new user to the database
-            fetch('https://coffee-store-server-two-tawny.vercel.app/users', {
-                method: 'POST',
-                headers: {
-                     "Content-Type" : "application/json",
-                },
-                body: JSON.stringify(newUser),
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                if(data.insertedId){
-                    alert("user created at database");
-                }
-            })
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        const createdAt = result?.user?.metadata?.creationTime;
+        const newUser = {
+          name,
+          email,
+          createdAt,
+        };
 
-    }
+        //using axios
+        axios.post("http://localhost:5000/users", newUser)
+         .then((data) => {
+          console.log(data);
+          console.log(data.data);
+          if(data.data.insertedId){
+            console.log("insert data to database");
+          }
+        });
+
+        //save new user to the database
+        // fetch("http://localhost:5000/users", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify(newUser),
+        // })
+        //   .then((res) => res.json())
+        //   .then((data) => {
+        //     console.log(data);
+        //     if (data.insertedId) {
+        //       alert("user created at database");
+        //     }
+        //   });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -65,19 +74,21 @@ const Register = () => {
               </label>
               <input
                 type="text"
-                placeholder="name" name="name"
+                placeholder="name"
+                name="name"
                 className="input input-bordered"
                 required
               />
             </div>
-            
+
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
               <input
                 type="email"
-                placeholder="email" name="email"
+                placeholder="email"
+                name="email"
                 className="input input-bordered"
                 required
               />
@@ -88,11 +99,11 @@ const Register = () => {
               </label>
               <input
                 type="password"
-                placeholder="password" name="password"
+                placeholder="password"
+                name="password"
                 className="input input-bordered"
                 required
               />
-              
             </div>
             <div className="form-control mt-6">
               <button className="btn btn-primary">Register</button>

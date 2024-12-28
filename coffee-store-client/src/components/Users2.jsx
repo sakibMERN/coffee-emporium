@@ -1,24 +1,28 @@
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
-import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const Users = () => {
-  const loadedUsers = useLoaderData();
-  const [users, setUsers] = useState(loadedUsers);
-  console.log(users);
+const Users2 = () => {
 
-  // useEffect(()=> {
-  //   axios.get('/')
-  //   .then(data => {
-  //     console.log(data.data);
-  //   })
-  // }, []);
+    const {isPending, isError, error ,data: users} = useQuery({
+        queryKey: ["users"],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:5000/users');
+            return res.json()
+        }
+    })
+
+    // const [users, setUsers] = useState([]);
+
+    // useEffect(()=> {
+    //     fetch('http://localhost:5000/users')
+    //     .then(res => res.json())
+    //     .then(data => setUsers(data))
+    // }, [])
 
   const handleDeleteUser = (id) => {
-    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -39,10 +43,9 @@ const Users = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log("delete is done: ", data);
             if (data.deletedCount > 0) {
-                const remainingUser = users.filter(user => user._id !== id);
-                setUsers(remainingUser);
+              // const remainingUser = users.filter(user => user._id !== id);
+              // setUsers(remainingUser);
               Swal.fire({
                 title: "Deleted!",
                 text: "Your file has been deleted.",
@@ -53,6 +56,19 @@ const Users = () => {
       }
     });
   };
+
+  if(isPending){
+    return <div>
+        <span className="loading loading-ball loading-xs"></span>
+<span className="loading loading-ball loading-sm"></span>
+<span className="loading loading-ball loading-md"></span>
+<span className="loading loading-ball loading-lg"></span>
+    </div>
+  }
+
+  if(isError){
+    return alert(error.message)
+  }
   return (
     <div className="w-10/12 mx-auto">
       <h2 className="text-4xl font-bold text-center">Users: {users.length}</h2>
@@ -101,4 +117,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Users2;
